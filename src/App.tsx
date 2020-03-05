@@ -1,10 +1,15 @@
 import React, { useState, FormEvent, ChangeEvent } from "react"
-import TodoList from "./TodoList"
-import TodoForm from "./TodoForm"
-import { Todo } from "./interfaces/Todo"
+import TodoList from "./components/TodoList"
+import TodoForm from "./components/TodoForm"
+import { Todo } from "./interfaces/TodoObject"
+//Redux
+import { useSelector, useDispatch } from "react-redux"
+import { todoAdd } from "./redux/actions/todoActions"
 
 const App: React.FC = () => {
-  const [todos, setTodos] = useState<Array<Todo>>([])
+  const dispatch = useDispatch()
+  const todos: Todo[] = useSelector((state: any) => state.todoReducer.todos)
+  console.log(todos)
   const [todoInput, setTodoInput] = useState("")
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -12,7 +17,7 @@ const App: React.FC = () => {
       ...previousTodos,
       { task: todoInput, finished: false }
     ]) */
-    setTodos([...todos, { task: todoInput, finished: false }])
+    dispatch(todoAdd({ task: todoInput, finished: false }))
     setTodoInput("")
   }
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

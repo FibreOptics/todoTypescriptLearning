@@ -5,7 +5,11 @@ interface Props extends HTMLProps<HTMLFormElement> {
   inputValue: string
 }
 
-const TodoForm = ({ onInputChange, inputValue, ...otherProps }: Props) => {
+const TodoForm: React.FC<Props> = ({
+  onInputChange,
+  inputValue,
+  ...otherProps
+}: Props) => {
   return (
     <form {...otherProps}>
       <input
